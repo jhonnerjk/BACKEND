@@ -18,7 +18,7 @@ const app = express();
 
 //middlewares
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     credentials: true
 })); //conexion con el frontend
 app.use(express.json()); 

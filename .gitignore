@@ -1,0 +1,7 @@
+node_modules
+.env
+*.log
+.DS_Store
+checkUsers.js
+updateRoles.js
+resetPasswords.js
