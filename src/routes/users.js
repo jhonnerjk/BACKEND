@@ -4,13 +4,9 @@ const userController = require('../controllers/userController');
 const checkToken = require('../middleware/checkToken');
 const checkRole = require('../middleware/checkRole');
 
-//crear usuario
 router.post('/', checkToken, checkRole.isAdmin, userController.createUser);
-
-//ver usuarios (solo admin)
 router.get('/', checkToken, checkRole.isAdmin, userController.getAllUsers);
-
-//ver solo médicos (recepcionista y admin)
-router.get('/doctors', checkToken, userController.getDoctors);
+router.patch('/:id', checkToken, checkRole.isAdmin, userController.updateUser);
+router.get('/docentes', checkToken, userController.getDocentes);
 
 module.exports = router;

@@ -5,16 +5,26 @@ exports.isAdmin = (req, res, next) => {
     next();
 };
 
-exports.isReceptionist = (req, res, next) => {
-    if (req.user.role !== 'recepcionista') {
-        return res.status(403).json({ message: 'Acceso denegado, se requiere rol de recepcionista.' });
+exports.isGestor = (req, res, next) => {
+    if (req.user.role !== 'gestor' && req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Acceso denegado, se requiere rol de gestor.' });
     }
     next();
 };
 
-exports.isMedico = (req, res, next) => {
-    if (req.user.role !== 'medico') {
-        return res.status(403).json({ message: 'Acceso denegado, se requiere rol de medico.' });
+exports.isDocente = (req, res, next) => {
+    if (req.user.role !== 'docente') {
+        return res.status(403).json({ message: 'Acceso denegado, se requiere rol de docente.' });
     }
     next();
+};
+
+// Middleware que permite múltiples roles
+exports.requireAnyRole = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ message: 'Acceso denegado.' });
+        }
+        next();
+    };
 };
