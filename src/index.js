@@ -14,7 +14,11 @@ const app = express();
 
 // CORS configurado para desarrollo y producción
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: [
+        'http://localhost:5173',
+        'https://frontend-e51e.vercel.app',
+        'https://frontend-beta-weld-69.vercel.app'
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
