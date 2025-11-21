@@ -46,7 +46,7 @@ exports.getAllReservations = async (req, res) => {
         const { estado, recurso } = req.query;
         let filter = {};
         
-        if (req.user.role === 'docente') {
+        if (Array.isArray(req.user.roles) && req.user.roles.includes('docente')) {
             filter.solicitante = req.user.userId;
         }
         
@@ -89,7 +89,7 @@ exports.getReservationById = async (req, res) => {
             return res.status(404).json({ message: 'Reserva no encontrada.' });
         }
 
-        if (req.user.role === 'docente' && reservation.solicitante._id.toString() !== req.user.userId) {
+        if (Array.isArray(req.user.roles) && req.user.roles.includes('docente') && reservation.solicitante._id.toString() !== req.user.userId) {
             return res.status(403).json({ message: 'No tienes permiso para ver esta reserva.' });
         }
 
@@ -159,7 +159,7 @@ exports.updateReservation = async (req, res) => {
             return res.status(404).json({ message: 'Reserva no encontrada.' });
         }
 
-        if (req.user.role === 'docente') {
+        if (Array.isArray(req.user.roles) && req.user.roles.includes('docente')) {
             if (reservation.solicitante.toString() !== req.user.userId) {
                 return res.status(403).json({ message: 'No puedes modificar reservas de otros usuarios.' });
             }
@@ -190,7 +190,7 @@ exports.deleteReservation = async (req, res) => {
             return res.status(404).json({ message: 'Reserva no encontrada.' });
         }
 
-        if (req.user.role === 'docente') {
+        if (Array.isArray(req.user.roles) && req.user.roles.includes('docente')) {
             if (reservation.solicitante.toString() !== req.user.userId) {
                 return res.status(403).json({ message: 'No puedes eliminar reservas de otros usuarios.' });
             }
@@ -205,3 +205,5 @@ exports.deleteReservation = async (req, res) => {
         res.status(500).json({ message: 'Error del servidor.', error: err.message });
     }
 };
+
+

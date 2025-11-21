@@ -16,11 +16,12 @@ const app = express();
 app.use(cors({
     origin: function (origin, callback) {
         const allowedOrigins = [
-            'http://localhost:5173',
-            /^https:\/\/frontend-e51e.*\.vercel\.app$/,
-            /^https:\/\/.*-jhonzjks-projects\.vercel\.app$/
+            'http://localhost:5173',  // Desarrollo local
+            /^https:\/\/frontend-e51e.*\.vercel\.app$/,  // Acepta frontend-e51e-CUALQUIER-COSA.vercel.app
+            /^https:\/\/.*-jhonzjks-projects\.vercel\.app$/  // Acepta CUALQUIER-COSA-jhonzjks-projects.vercel.app
         ];
         
+        // Permitir si no hay origin (herramientas como Postman) o si coincide con los patrones permitidos
         if (!origin || allowedOrigins.some(pattern => 
             typeof pattern === 'string' ? pattern === origin : pattern.test(origin)
         )) {
