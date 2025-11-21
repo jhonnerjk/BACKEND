@@ -1,4 +1,3 @@
-// Multi-rol: ahora utilizamos req.user.roles (array) y hacemos match por inclusión.
 function hasRole(userRoles, target) {
     if (!Array.isArray(userRoles)) return false;
     return userRoles.includes(target);
@@ -25,7 +24,6 @@ exports.isDocente = (req, res, next) => {
     next();
 };
 
-// Middleware genérico que permite múltiples roles requeridos (cualquiera).
 exports.requireAnyRole = (...roles) => {
     return (req, res, next) => {
         const userRoles = req.user.roles || [];

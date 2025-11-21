@@ -25,7 +25,6 @@ userSchema.pre('save', async function (next) {
         this.role = undefined;
     }
     if (Array.isArray(this.roles)) {
-        // Deduplicar roles y asegurar mínimo uno
         this.roles = [...new Set(this.roles)];
         if (this.roles.length === 0) {
             this.roles = ['docente'];
@@ -45,7 +44,6 @@ userSchema.post('init', function (doc) {
     }
 });
 
-// Validación antes de validar (por si se usan operaciones directas)
 userSchema.pre('validate', function (next) {
     if (Array.isArray(this.roles)) {
         this.roles = [...new Set(this.roles)];

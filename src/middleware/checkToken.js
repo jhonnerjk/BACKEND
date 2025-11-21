@@ -10,7 +10,6 @@ module.exports = function (req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
         if (!decoded.roles && decoded.role) {
             decoded.roles = [decoded.role];
         }

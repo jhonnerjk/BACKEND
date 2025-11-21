@@ -6,7 +6,6 @@ dotenv.config();
 async function run() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    // Multi-rol: buscamos si ya existe algún usuario con rol admin en 'roles'.
     const existingAdmin = await User.findOne({ roles: 'admin' });
     if (existingAdmin) {
       console.log('Ya existe un admin:', existingAdmin.email);

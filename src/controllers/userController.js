@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 exports.createUser = async (req, res) => {
-    const { nombre, email, password, role, roles, activo } = req.body; // acepta 'role' legacy o 'roles' array
+    const { nombre, email, password, role, roles, activo } = req.body;
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {

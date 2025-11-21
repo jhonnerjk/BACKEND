@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // Registro: ahora acepta nombre y valida que el rol esté dentro de los permitidos.
 exports.register = async (req, res) => {
-    const { nombre, email, password, role, roles } = req.body; // acepta 'role' legacy o 'roles' array
+    const { nombre, email, password, role, roles } = req.body;
     try {
         if (!nombre || !email || !password) {
             return res.status(400).json({ message: 'nombre, email y password son obligatorios.' });
@@ -49,7 +49,6 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Contraseña incorrecta.' });
         }
 
-        // Payload multi-rol: añadimos 'roles'. Se mantiene 'role' opcional por compatibilidad (primer rol si existe).
         const payload = { userId: user._id, roles: user.roles, role: user.roles ? user.roles[0] : user.role, nombre: user.nombre };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' });
         res.json({ 
