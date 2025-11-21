@@ -14,11 +14,21 @@ const app = express();
 
 // CORS configurado para desarrollo y producción
 app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'https://frontend-e51e.vercel.app',
-        'https://frontend-beta-weld-69.vercel.app'
-    ],
+    origin: function (origin, callback) {
+        const allowedOrigins = [
+            'http://localhost:5173',
+            /^https:\/\/frontend-e51e.*\.vercel\.app$/,
+            /^https:\/\/.*-jhonzjks-projects\.vercel\.app$/
+        ];
+        
+        if (!origin || allowedOrigins.some(pattern => 
+            typeof pattern === 'string' ? pattern === origin : pattern.test(origin)
+        )) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
