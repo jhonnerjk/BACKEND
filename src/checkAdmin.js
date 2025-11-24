@@ -8,7 +8,7 @@ async function checkAdmin() {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Conectado a MongoDB');
     
-    const admins = await User.find({ role: 'admin' });
+    const admins = await User.find({ roles: 'admin' });
     console.log(`\nUsuarios admin encontrados: ${admins.length}`);
     
     if (admins.length > 0) {
@@ -17,7 +17,7 @@ async function checkAdmin() {
         console.log('  ID:', admin._id);
         console.log('  Nombre:', admin.nombre);
         console.log('  Email:', admin.email);
-        console.log('  Role:', admin.role);
+        console.log('  Roles:', admin.roles);
         console.log('  Activo:', admin.activo);
       });
     } else {
